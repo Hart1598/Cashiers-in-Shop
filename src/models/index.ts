@@ -1,6 +1,6 @@
 import sequelize from "../db";
 import  {Model, DataTypes,Optional }  from 'sequelize';
-import {ICashier, ICashRegister, IShop, Sex, Days, Shifts} from '../types';
+import {ICashier, ICashRegister, IShop, IWorkingDays, Sex, Shifts, Days} from '../types';
 
 interface ShopCreationAttributes extends Optional<IShop, 'id'> {}
 
@@ -28,14 +28,29 @@ export class Cashier extends Model<ICashier, CashierCreationAttributes> implemen
     public id!: number;
     public otherJobs!: [string];
     public sex!: Sex;
-    public workingDays!: [Days];
+
     public shop_id!: number
+    public working_days_id!: number
     public worksInShifts!: Shifts;
     public yearsOfExperience!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
+
+
+interface WorkingDaysCreationAttributes extends Optional<IWorkingDays, 'id'> {}
+
+export class WorkingDays extends Model<IWorkingDays, WorkingDaysCreationAttributes> implements IWorkingDays {
+    public id!: number;
+    public working_dates!: [Date];
+    public working_days!: [number];
+    public working_days_string!: [Days];
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
 
 interface CashRegisterCreationAttributes extends Optional<ICashRegister, 'id'> {}
 
@@ -75,6 +90,35 @@ Shop.init(
     }
 )
 
+WorkingDays.init({
+    id:{
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    working_dates: {
+        type: DataTypes.ARRAY(DataTypes.DATE)
+    },
+    working_days:{
+        type: DataTypes.ARRAY(DataTypes.ENUM(
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
+        ))
+    },
+    working_days_string:{
+        type: DataTypes.ARRAY(DataTypes.INTEGER)
+    }
+}, {
+    sequelize,
+    tableName: "working_days",
+})
+
+
 Cashier.init(
     {
         id: {
@@ -104,14 +148,14 @@ Cashier.init(
             values: ['Night', 'Day'],
             allowNull: false,
         },
-        workingDays: {
-            type: DataTypes.ARRAY(DataTypes.STRING)
-        },
         otherJobs: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
         },
         shop_id:{
+            type: DataTypes.INTEGER,
+        },
+        working_days_id:{
             type: DataTypes.INTEGER,
         }
     },
@@ -145,5 +189,8 @@ CashRegister.init(
     })
 
 Cashier.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})
+
+Cashier.belongsTo(WorkingDays, {foreignKey: 'working_days_id', targetKey: 'id'})
+
 Shop.hasMany(CashRegister)
 CashRegister.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})

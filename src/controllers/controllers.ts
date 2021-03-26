@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import Service from '../services/services'
-import {ICashier, ICashRegister, IShop} from "../types";
+import {Days, ICashier, ICashRegister, IShop} from "../types";
 
 
 class Controller{
@@ -27,22 +27,30 @@ class Controller{
     }
 
     async createCashier(req: Request, res: Response){
-        const {fullname, age, sex, yearsOfExperience, worksInShifts, workingDays, otherJobs, shop_id}:ICashier = req.body
+        const {fullname, age, sex, yearsOfExperience, worksInShifts, otherJobs, shop_id}:ICashier = req.body
+        const {workingDays} = req.body
 
         if(!fullname || !age || !sex || !yearsOfExperience || !worksInShifts || !workingDays || !otherJobs || !shop_id){
             res.status(400).json({message: "Введите fullname, age, sex, yearsOfExperience, worksInShifts, workingDays, otherJobs, shop_id"})
         }
 
         try{
-            const cashier = await Service.createCashier({fullname, age, sex, yearsOfExperience, worksInShifts, workingDays, otherJobs, shop_id})
+            const working_days_string = workingDays.map((day: Date) => new Date(day).getDay())
+            const working_days = working_days_string.map((day: number) => Days[day])
+
+            const days = await Service.creatWorkingDays({working_days_string, working_days, working_dates: workingDays})
+
+            const cashier = await Service.createCashier({fullname, age, sex, yearsOfExperience, worksInShifts, otherJobs, shop_id, working_days_id: days.id})
 
             if(!cashier){
                 res.status(400).json({message: "Не удалось создать касира в бд"})
             }
 
-            res.status(200).json(cashier)
+
+             res.status(200).json(cashier)
         }
         catch (e) {
+            console.log(e)
             res.status(400).json({message: e})
         }
     }

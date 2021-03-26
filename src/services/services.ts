@@ -1,5 +1,5 @@
-import {ICashier, ICashRegister, IShop} from "../types";
-import {Cashier, CashRegister, Shop} from '../models'
+import {ICashier, ICashRegister, IShop, IWorkingDays} from "../types";
+import {Cashier, CashRegister, Shop, WorkingDays} from '../models'
 import {Op} from 'sequelize'
 
 class Service{
@@ -14,16 +14,29 @@ class Service{
         }
     }
 
-    async createCashier(cashier: ICashier):Promise<ICashier | void>{
+    async createCashier(cashier: ICashier):Promise<ICashier>{
         try{
             const createdCashier = await Cashier.create(cashier)
-
             return createdCashier
         }
         catch (e) {
             throw new Error(e)
         }
     }
+
+    async creatWorkingDays(workingDays: IWorkingDays):Promise<IWorkingDays>{
+        try{
+            const days = await WorkingDays.create(workingDays)
+
+            return days
+        }
+        catch (e) {
+            console.log(e)
+            throw new Error(e)
+        }
+    }
+
+
 
     async createCashRegister(cashRegister: ICashRegister):Promise<ICashRegister | void>{
         try{
@@ -51,7 +64,7 @@ class Service{
         try{
             let OtherJobs
             if(typeof otherJobs === 'string'){
-                OtherJobs = otherJobs.split(',')
+                OtherJobs = otherJobs.trim().split(',')
             }
             else{
                 OtherJobs = otherJobs
@@ -62,7 +75,7 @@ class Service{
                         [Op.gte]: yearsOfExperience
                     },
                     otherJobs: {
-                        [Op.contained]: OtherJobs
+                        [Op.contains]: OtherJobs
                     }
                 },
                 include: {

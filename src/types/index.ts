@@ -25,12 +25,21 @@ export interface ICashier{
     sex?: Sex,
     yearsOfExperience?: number,
     worksInShifts?: Shifts,
-    workingDays?: [Days],
     otherJobs?: [string] | string,
-    shop_id?: number
+    shop_id?: number,
+    working_days_id?:number
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+
+export interface IWorkingDays{
+    id?: number,
+    working_dates: [Date],
+    working_days_string: [Days],
+    working_days: [number]
+}
+
 
 export interface ICashRegister{
     id?: number,
