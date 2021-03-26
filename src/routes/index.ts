@@ -5,6 +5,7 @@ const router: Router = Router()
 
 
 router.post('/shop', Controllers.createShop)
+router.post('/cashier', Controllers.createCashier)
 
 
 
