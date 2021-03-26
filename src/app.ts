@@ -1,10 +1,11 @@
-import dotenv from 'dotenv'
-dotenv.config()
-
-
+require('dotenv').config()
 
 import express from 'express'
 import db from './db'
+const models = require('./models')
+
+
+
 
 
 const app: express.Application = express()

@@ -18,8 +18,8 @@ export enum Sex{
     'Female'
 }
 
-export interface Cashier{
-    id: number,
+export interface ICashier{
+    id?: number,
     fullname: string
     age: number,
     sex: Sex,
@@ -27,20 +27,29 @@ export interface Cashier{
     worksInShifts: Shifts,
     workingDays: [Days],
     otherJobs: [string],
+    shop_id: number
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
-export interface CashRegister{
-    id: number,
+export interface ICashRegister{
+    id?: number,
     money: number,
     secretKey: string
+    shop_id: number
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
-export interface Shop{
-    id: number,
+export interface IShop{
+    id?: number,
     name: string,
     city: string,
     address: string,
-    cashiers: [Cashier]
-    cashRegisters: [CashRegister]
+    // cashiers?: [ICashier]
+    // cashRegisters?: [ICashRegister]
+    createdAt?: Date;
+    updatedAt?: Date;
 }
+
 
