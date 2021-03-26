@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import Service from '../services/services'
-import {ICashier, IShop} from "../types";
+import {ICashier, ICashRegister, IShop} from "../types";
 
 
 class Controller{
@@ -45,9 +45,44 @@ class Controller{
         catch (e) {
             res.status(400).json({message: e})
         }
+    }
 
 
+    async createCashRegister(req: Request, res: Response){
+        const {money, shop_id, secretKey}: ICashRegister = req.body
 
+        if(!money || !shop_id || !secretKey){
+            res.status(400).json({message: "Введите money, shop_id, secretKey"})
+        }
+
+        try{
+            const cashRegister = await Service.createCashRegister({money, shop_id, secretKey})
+
+            if(!cashRegister){
+                res.status(400).json({message: "Не удалось создать кассу в бд"})
+            }
+
+            res.status(200).json(cashRegister)
+        }
+        catch (e) {
+            res.status(400).json({message: e})
+        }
+    }
+
+
+    async getAllCashiers(req: Request, res: Response){
+        try{
+            const cashiers = await Service.getAllCashiers()
+
+            if(!cashiers){
+                res.status(400).json({message: "Не удалось получить касиров в бд"})
+            }
+
+            res.status(200).json(cashiers)
+        }
+        catch (e) {
+            res.status(400).json({message: e})
+        }
     }
 
 }

@@ -1,5 +1,5 @@
-import {ICashier, IShop} from "../types";
-import {Cashier, Shop} from '../models'
+import {ICashier, ICashRegister, IShop} from "../types";
+import {Cashier, CashRegister, Shop} from '../models'
 
 class Service{
     async createShop({name, city, address}: IShop): Promise<IShop | void>{
@@ -14,9 +14,36 @@ class Service{
     }
 
     async createCashier(cashier: ICashier):Promise<ICashier | void>{
-        const createdCashier = await Cashier.create(cashier)
+        try{
+            const createdCashier = await Cashier.create(cashier)
 
-        return createdCashier
+            return createdCashier
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async createCashRegister(cashRegister: ICashRegister):Promise<ICashRegister | void>{
+        try{
+            const cash = await CashRegister.create(cashRegister)
+
+            return cash
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async getAllCashiers():Promise<ICashier[] | void>{
+        try{
+            const cashier = await Cashier.findAll()
+
+            return cashier
+        }
+        catch (e) {
+            throw new Error(e)
+        }
     }
 }
 
