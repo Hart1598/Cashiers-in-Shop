@@ -85,6 +85,24 @@ class Controller{
         }
     }
 
+    async getTargetCashiers1(req: Request, res: Response){
+        const {city, name}: IShop = req.query
+        const {yearsOfExperience, otherJobs}:ICashier = req.query
+
+        try{
+            const cashiers = await Service.getTargetCashiers1({city, yearsOfExperience, name, otherJobs})
+
+            if(!cashiers){
+                res.status(400).json({message: "Не удалось получить касиров в бд"})
+            }
+
+            res.status(200).json(cashiers)
+        }
+        catch (e) {
+            res.status(400).json({message: e})
+        }
+    }
+
 }
 
 export default new Controller()

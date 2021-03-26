@@ -20,14 +20,14 @@ export enum Sex{
 
 export interface ICashier{
     id?: number,
-    fullname: string
-    age: number,
-    sex: Sex,
-    yearsOfExperience: number,
-    worksInShifts: Shifts,
-    workingDays: [Days],
-    otherJobs: [string],
-    shop_id: number
+    fullname?: string
+    age?: number,
+    sex?: Sex,
+    yearsOfExperience?: number,
+    worksInShifts?: Shifts,
+    workingDays?: [Days],
+    otherJobs?: [string] | string,
+    shop_id?: number
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -43,9 +43,9 @@ export interface ICashRegister{
 
 export interface IShop{
     id?: number,
-    name: string,
-    city: string,
-    address: string,
+    name?: string,
+    city?: string,
+    address?: string,
     // cashiers?: [ICashier]
     // cashRegisters?: [ICashRegister]
     createdAt?: Date;

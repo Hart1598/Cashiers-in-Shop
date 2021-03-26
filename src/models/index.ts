@@ -144,6 +144,6 @@ CashRegister.init(
         tableName: "cash_register",
     })
 
-
-Shop.hasMany(Cashier, {foreignKey: 'shop_id'})
-Shop.hasMany(CashRegister,{foreignKey: 'shop_id'})
+Cashier.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})
+Shop.hasMany(CashRegister)
+CashRegister.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})
