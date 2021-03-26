@@ -3,13 +3,13 @@ require('dotenv').config()
 import express from 'express'
 import db from './db'
 const models = require('./models')
-
+import router from "./routes";
 
 
 
 
 const app: express.Application = express()
-
+app.use('/', router)
 
 const start : Function = async () => {
     try{
