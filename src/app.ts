@@ -9,6 +9,8 @@ import router from "./routes";
 
 
 const app: express.Application = express()
+app.use(express.json())
+app.use(express.urlencoded())
 app.use('/', router)
 
 const start : Function = async () => {

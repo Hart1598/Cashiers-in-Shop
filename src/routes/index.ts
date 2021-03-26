@@ -1,10 +1,10 @@
 import {Router} from 'express'
-import controllers from "../controllers/controllers";
+import Controllers from "../controllers/controllers";
 
 const router: Router = Router()
 
 
-router.post('/shop', controllers.createShop)
+router.post('/shop', Controllers.createShop)
 
 
 
