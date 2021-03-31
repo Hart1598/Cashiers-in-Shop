@@ -1,27 +1,28 @@
 import {Router} from 'express'
-import Controllers from "../controllers/controllers";
-
+import CashierContoller from "../controllers/CashierContoller";
+import ShopContoller from '../controllers/shopContoller'
+import CashRegisterContoller from '../controllers/cashRegisterContoller'
 const router: Router = Router()
 
 
-router.post('/shop', Controllers.createShop)
-router.delete('/shop', Controllers.deleteShop)
-router.put('/shop', Controllers.updateShop)
-router.get('/shop', Controllers.getShopById)
-router.get('/shopAll', Controllers.getShops)
-
-router.post('/cashier', Controllers.createCashier)
+router.post('/shop', ShopContoller.createShop)
+router.delete('/shop', ShopContoller.deleteShop)
+router.put('/shop', ShopContoller.updateShop)
+router.get('/shop', ShopContoller.getShopById)
+router.get('/shopAll', ShopContoller.getShops)
 
 
-router.post('/cashRegister', Controllers.createCashRegister)
-router.delete('/cashRegister', Controllers.deleteCashRegister)
-router.put('/cashRegister', Controllers.updateCashRegister)
-router.get('/cashRegister', Controllers.getCashRegisterById)
-router.get('/cashRegisterAll', Controllers.getAllCashRegisters)
+router.post('/cashRegister', CashRegisterContoller.createCashRegister)
+router.delete('/cashRegister', CashRegisterContoller.deleteCashRegister)
+router.put('/cashRegister', CashRegisterContoller.updateCashRegister)
+router.get('/cashRegister', CashRegisterContoller.getCashRegisterById)
+router.get('/cashRegisterAll', CashRegisterContoller.getAllCashRegisters)
 
-router.get('/getAllCashiers', Controllers.getAllCashiers)
-router.get('/getTargetCashiers1', Controllers.getTargetCashiers1)
-router.get('/getTargetCashiers2', Controllers.getTargetCashiers2)
+
+router.post('/cashier', CashierContoller.createCashier)
+router.get('/getAllCashiers', CashierContoller.getAllCashiers)
+router.get('/getTargetCashiers1', CashierContoller.getTargetCashiers1)
+router.get('/getTargetCashiers2', CashierContoller.getTargetCashiers2)
 
 
 
