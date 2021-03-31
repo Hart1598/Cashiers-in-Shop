@@ -15,6 +15,71 @@ class Service{
         }
     }
 
+    async deleteShop({id}: IShop){
+        try{
+            const shop = await Shop.findOne({where: {id}})
+
+            if(!shop){
+                throw new Error("Не найден магазин с таким id")
+            }
+
+            await shop.destroy()
+
+            return shop
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async updateShop(shop: IShop):Promise<IShop | undefined>{
+        try{
+            if(typeof shop.id === 'undefined'){
+                throw new Error("Неверний тип id")
+            }
+
+            const updatedShop = await Shop.findOne({where: {id: shop.id}})
+
+            if(!updatedShop){
+                throw new Error("Не найден магазин с таким id")
+            }
+
+            await updatedShop.update(shop)
+
+            return updatedShop
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async getShopById(id: IShop):Promise<IShop>{
+        try{
+            const shop = await Shop.findOne({where: id})
+
+            if(!shop){
+                throw new Error("Не найден магазин с таким id")
+            }
+            return shop
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async getShops():Promise<IShop[]>{
+        try{
+            const shops = await Shop.findAll()
+            if(!shops){
+                throw new Error("Магазини не найдены")
+            }
+            return shops
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async createCashier(cashier: ICashier):Promise<ICashier>{
         try{
             const createdCashier = await Cashier.create(cashier)
@@ -92,7 +157,7 @@ class Service{
                 throw new Error("Не найден cash register с таким id")
             }
 
-            cash.update(cashRegister)
+            await cash.update(cashRegister)
 
 
             return cash

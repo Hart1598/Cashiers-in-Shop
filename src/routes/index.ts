@@ -5,10 +5,10 @@ const router: Router = Router()
 
 
 router.post('/shop', Controllers.createShop)
-
-
-
-
+router.delete('/shop', Controllers.deleteShop)
+router.put('/shop', Controllers.updateShop)
+router.get('/shop', Controllers.getShopById)
+router.get('/shopAll', Controllers.getShops)
 
 router.post('/cashier', Controllers.createCashier)
 
