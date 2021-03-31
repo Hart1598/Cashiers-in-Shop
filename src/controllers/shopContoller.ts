@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {IShop} from "../types";
 import Service from "../services/shopServices";
-import {Shop} from "../models";
+
 
 class ShopContoller{
     async createShop(req: Request, res: Response){

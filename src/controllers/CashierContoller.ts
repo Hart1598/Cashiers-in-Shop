@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import Service from '../services/cashierServices'
-import {ICashier, ICashRegister, IShop, IWorkingDays} from "../types";
+import {ICashier, IShop, IWorkingDays} from "../types";
 import {combineWorkingDays} from "../helpers/combineWorkingDays";
 
 
@@ -31,6 +31,85 @@ class Controller{
         }
         catch (e) {
             console.log(e)
+            res.status(400).json({message: e.message})
+        }
+    }
+
+    async addCashierDays(req: Request, res: Response){
+        const {id}: ICashier = req.body
+        const {workingDays} = req.body
+
+        if(!workingDays || !id){
+            res.status(400).json({message: "Введите workingDays,id"})
+        }
+
+        const day = combineWorkingDays(workingDays)
+
+        const days = await Service.creatWorkingDays(day, id)
+
+        if(!days){
+            res.status(400).json({message: "Не удалось создать рабочие дни в бд"})
+        }
+        res.status(200).json(day)
+    }
+
+    async deleteCashierDays(req: Request, res: Response){
+        const {id}: ICashier = req.body
+        const {workingDays} = req.body
+
+        if(!workingDays || !id){
+            res.status(400).json({message: "Введите workingDays,id"})
+        }
+
+        const day = combineWorkingDays(workingDays)
+
+        const deletedDays = await Service.deleteWorkingDays(day, id)
+        if(!deletedDays){
+            res.status(400).json({message: "Не удалось удалить рабочие дни в бд"})
+        }
+        res.status(200).json(deletedDays)
+
+    }
+
+    async deleteCashier(req: Request, res: Response){
+        const {id}: IShop = req.query
+
+        if(!id){
+            res.status(400).json({message: "Введите id"})
+        }
+
+        try{
+            const deletedShop = await Service.deleteCashier({id})
+
+            res.status(200).json(deletedShop)
+        }
+        catch (e) {
+            res.status(400).json({message: e.message})
+        }
+    }
+
+    async updateCashier(req: Request, res: Response){
+        const {id,fullname, age, sex, yearsOfExperience, worksInShifts, otherJobs, shop_id}:ICashier = req.body
+
+        if(!id || !fullname || !age || !sex || !yearsOfExperience || !worksInShifts || !otherJobs || !shop_id){
+            res.status(400).json({message: "Введите id,fullname, age, sex, yearsOfExperience, worksInShifts, workingDays, otherJobs, shop_id"})
+        }
+
+        try{
+            const updateCashier = await Service.updateCashier({
+                id,
+                fullname,
+                age,
+                sex,
+                yearsOfExperience,
+                worksInShifts,
+                otherJobs,
+                shop_id
+            })
+
+            res.status(200).json(updateCashier)
+        }
+        catch (e) {
             res.status(400).json({message: e.message})
         }
     }
