@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import Service from '../services/services'
-import {ICashier, ICashRegister, IShop} from "../types";
+import {ICashier, ICashRegister, IShop, IWorkingDays} from "../types";
 import {combineWorkingDays} from "../helpers/combineWorkingDays";
 
 
@@ -119,28 +119,26 @@ class Controller{
     }
 
     async getTargetCashiers2(req: Request, res: Response){
-        // const {name, address}:IShop = req.query
-        // const {worksInShifts}: ICashier = req.query
-        // const {working_days_string}:IWorkingDays = req.query
-        //
-        //
-        //
-        // if(!address || !name || !worksInShifts || !working_days_string){
-        //     res.status(400).json({message: "Введите address, name, worksInShifts, working_days_string"})
-        // }
-        //
-        // try{
-        //     const cashiers = await Service.getTargetCashiers2({name,address,worksInShifts, working_days_string})
-        //
-        //     if(!cashiers){
-        //         res.status(400).json({message: "Не удалось получить касиров в бд"})
-        //     }
-        //
-        //     res.status(200).json(cashiers)
-        // }
-        // catch (e) {
-        //
-        // }
+        const {name, address}:IShop = req.query
+        const {worksInShifts}: ICashier = req.query
+        const {working_days_string}:IWorkingDays = req.query
+
+        if(!address || !name || !worksInShifts || !working_days_string){
+            res.status(400).json({message: "Введите address, name, worksInShifts, working_days_string"})
+        }
+
+        try{
+            const cashiers = await Service.getTargetCashiers2({name,address,worksInShifts, working_days_string})
+
+            if(!cashiers){
+                res.status(400).json({message: "Не удалось получить касиров в бд"})
+            }
+
+            res.status(200).json(cashiers)
+        }
+        catch (e) {
+            res.status(400).json({message: e})
+        }
     }
 
 }

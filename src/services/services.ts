@@ -1,6 +1,7 @@
 import {ICashier, ICashRegister, IShop, IWorkingDays} from "../types";
 import {Cashier, CashRegister, Shop, WorkingDays} from '../models'
-import {Op} from 'sequelize'
+import Sequelize, {Op} from 'sequelize'
+import sequelize from "../db";
 
 class Service{
     async createShop({name, city, address}: IShop): Promise<IShop>{
@@ -122,38 +123,28 @@ class Service{
             throw new Error(e)
         }
     }
-    // model: Shop,
-    // where: {
-    //     address,
-    //     name
-    // },
     async getTargetCashiers2({name, address, worksInShifts, working_days_string}: IShop & IWorkingDays & ICashier):Promise<ICashier[] | void>{
         try {
-            // let working_days
-            // if(typeof working_days_string === "string"){
-            //     working_days = working_days_string.split(',')
-            // }
-            // const cashier = await Cashier.findAll({
-            //     where: {worksInShifts},
-            //     include: [{
-            //         model: Shop,
-            //         where: {
-            //             address,
-            //             name
-            //         },
-            //     }, {
-            //         model: WorkingDays,
-            //         where: {
-            //             working_days: {
-            //                 [Op.contains]: working_days
-            //             },
-            //
-            //         }
-            //     }]
-            //
-            // })
-            //
-            // return cashier
+            const cashier = await Cashier.findAll({
+                where: {worksInShifts},
+                include: [{
+                    model: Shop,
+                    where: {
+                        address,
+                        name
+                    },
+                    attributes: ['id', 'name', 'city', 'address']
+                }, {
+                    model: WorkingDays,
+                    where:{working_days_string,
+                        working_days:{
+                            [Op.in]: [Sequelize.literal('SELECT "WorkingDays"."working_days" FROM "cashier" WHERE MOD("WorkingDays"."working_days", 2) = 0')]
+                        }
+                    },
+                    attributes: ['working_dates', 'working_days_string']
+                }]
+            })
+            return cashier
         }
         catch (e) {
             console.log(e)
