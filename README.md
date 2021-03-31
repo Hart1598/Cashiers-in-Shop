@@ -1,5 +1,26 @@
 # Cashiers-in-Shop
 
+# All endpoints
+
+POST: /shop - create shop</br>
+POST: /cashier - create cashier</br>
+POST: /cashRegister - create cash register</br>
+GET: /getAllCashiers - get all cashiers</br>
+GET: /getTargetCashiers1 - get cashiers by query city, yearsOfExperience, name, otherJobs</br>
+GET: /getTargetCashiers2 - get cashiers by query name, address, worksInShifts, working_days_string</br>
+DELETE: /cashRegister - delete cash register by query id</br>
+PUT: /cashRegister - update cash register by body request</br>
+GET: /cashRegister - get cash register by query id</br>
+GET: /cashRegisterAll - get all cash register</br>
+DELETE: /shop - delete shop by query id</br>
+PUT: /shop - update shop by body request</br>
+GET: /shop - get shop by id</br>
+GET: /shopAll - get all shops</br>
+DELETE: /cashier - delete cashier by query id</br>
+PUT: /cashier - update cashier by body request</br>
+POST: /cashier/days - add working days to cashier by body</br>
+DELETE: /cashier/days - delete working days to cashier by body</br>
+
 # DB context
 ![Screenshot_3](https://user-images.githubusercontent.com/45105989/113150206-7f844500-923c-11eb-860f-d74708eb17a7.png)
 
@@ -18,7 +39,7 @@ DB Working days
 
 
 
-# Endpoints:
+# Endpoints
 
 # GET: /getAllCashiers
 ![Screenshot_8](https://user-images.githubusercontent.com/45105989/113151261-94ada380-923d-11eb-9888-c3991a7894d9.png)
