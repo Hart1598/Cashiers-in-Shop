@@ -44,9 +44,9 @@ export interface IWorkingDays{
 
 export interface ICashRegister{
     id?: number,
-    money: number,
-    secretKey: string
-    shop_id: number
+    money?: number,
+    secretKey?: string
+    shop_id?: number
     createdAt?: Date;
     updatedAt?: Date;
 }
