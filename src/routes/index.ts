@@ -9,7 +9,7 @@ router.post('/cashier', Controllers.createCashier)
 router.post('/cashRegister', Controllers.createCashRegister)
 router.get('/getAllCashiers', Controllers.getAllCashiers)
 router.get('/getTargetCashiers1', Controllers.getTargetCashiers1)
-
+router.get('/getTargetCashiers2', Controllers.getTargetCashiers2)
 
 
 

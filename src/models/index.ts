@@ -43,9 +43,10 @@ interface WorkingDaysCreationAttributes extends Optional<IWorkingDays, 'id'> {}
 
 export class WorkingDays extends Model<IWorkingDays, WorkingDaysCreationAttributes> implements IWorkingDays {
     public id!: number;
-    public working_dates!: [Date];
-    public working_days!: [number];
-    public working_days_string!: [Days];
+    public working_dates!: Date;
+    public working_days!: number;
+    public working_days_string!: Days;
+    public CashierId!: number
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -97,10 +98,13 @@ WorkingDays.init({
         primaryKey: true
     },
     working_dates: {
-        type: DataTypes.ARRAY(DataTypes.DATE)
+        type: DataTypes.DATE
     },
     working_days:{
-        type: DataTypes.ARRAY(DataTypes.ENUM(
+        type: DataTypes.INTEGER
+    },
+    working_days_string:{
+        type: DataTypes.ENUM(
             'Sunday',
             'Monday',
             'Tuesday',
@@ -108,10 +112,7 @@ WorkingDays.init({
             'Thursday',
             'Friday',
             'Saturday'
-        ))
-    },
-    working_days_string:{
-        type: DataTypes.ARRAY(DataTypes.INTEGER)
+        )
     }
 }, {
     sequelize,
@@ -155,9 +156,6 @@ Cashier.init(
         shop_id:{
             type: DataTypes.INTEGER,
         },
-        working_days_id:{
-            type: DataTypes.INTEGER,
-        }
     },
     {
         sequelize,
@@ -190,7 +188,8 @@ CashRegister.init(
 
 Cashier.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})
 
-Cashier.belongsTo(WorkingDays, {foreignKey: 'working_days_id', targetKey: 'id'})
+Cashier.hasMany(WorkingDays)
+WorkingDays.belongsTo(Cashier)
 
 Shop.hasMany(CashRegister)
 CashRegister.belongsTo(Shop, {foreignKey: 'shop_id', targetKey: 'id'})

@@ -35,9 +35,10 @@ export interface ICashier{
 
 export interface IWorkingDays{
     id?: number,
-    working_dates: [Date],
-    working_days_string: [Days],
-    working_days: [number]
+    working_dates?: Date,
+    working_days_string?: Days | string,
+    working_days?: number
+    CashierId?: number
 }
 
 

@@ -1,6 +1,7 @@
 import {Request, Response} from 'express'
 import Service from '../services/services'
-import {Days, ICashier, ICashRegister, IShop} from "../types";
+import {ICashier, ICashRegister, IShop} from "../types";
+import {combineWorkingDays} from "../helpers/combineWorkingDays";
 
 
 class Controller{
@@ -35,18 +36,18 @@ class Controller{
         }
 
         try{
-            const working_days_string = workingDays.map((day: Date) => new Date(day).getDay())
-            const working_days = working_days_string.map((day: number) => Days[day])
-
-            const days = await Service.creatWorkingDays({working_days_string, working_days, working_dates: workingDays})
-
-            const cashier = await Service.createCashier({fullname, age, sex, yearsOfExperience, worksInShifts, otherJobs, shop_id, working_days_id: days.id})
+            const cashier = await Service.createCashier({fullname, age, sex, yearsOfExperience, worksInShifts, otherJobs, shop_id})
 
             if(!cashier){
                 res.status(400).json({message: "Не удалось создать касира в бд"})
             }
+            const day = combineWorkingDays(workingDays)
 
+            const days = await Service.creatWorkingDays(day, cashier.id)
 
+            if(!days){
+                res.status(400).json({message: "Не удалось создать рабочие дни в бд"})
+            }
              res.status(200).json(cashier)
         }
         catch (e) {
@@ -97,6 +98,12 @@ class Controller{
         const {city, name}: IShop = req.query
         const {yearsOfExperience, otherJobs}:ICashier = req.query
 
+        console.log(city, name, yearsOfExperience, otherJobs)
+
+        if(!city || !name || !yearsOfExperience || !otherJobs){
+            res.status(400).json({message: "Введите city, name, yearsOfExperience, otherJobs"})
+        }
+
         try{
             const cashiers = await Service.getTargetCashiers1({city, yearsOfExperience, name, otherJobs})
 
@@ -109,6 +116,31 @@ class Controller{
         catch (e) {
             res.status(400).json({message: e})
         }
+    }
+
+    async getTargetCashiers2(req: Request, res: Response){
+        // const {name, address}:IShop = req.query
+        // const {worksInShifts}: ICashier = req.query
+        // const {working_days_string}:IWorkingDays = req.query
+        //
+        //
+        //
+        // if(!address || !name || !worksInShifts || !working_days_string){
+        //     res.status(400).json({message: "Введите address, name, worksInShifts, working_days_string"})
+        // }
+        //
+        // try{
+        //     const cashiers = await Service.getTargetCashiers2({name,address,worksInShifts, working_days_string})
+        //
+        //     if(!cashiers){
+        //         res.status(400).json({message: "Не удалось получить касиров в бд"})
+        //     }
+        //
+        //     res.status(200).json(cashiers)
+        // }
+        // catch (e) {
+        //
+        // }
     }
 
 }
