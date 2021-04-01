@@ -54,20 +54,32 @@ Params:</br> ![Screenshot_12](https://user-images.githubusercontent.com/45105989
 
 ![Screenshot_11](https://user-images.githubusercontent.com/45105989/113151845-2d442380-923e-11eb-8872-22729f409b7d.png)
 
-# POST: /shop | Create shop
+# POST: /shop
 Params:</br>
 ![Screenshot_13](https://user-images.githubusercontent.com/45105989/113152133-7bf1bd80-923e-11eb-8096-c0f7a6300783.png)
 
 Created shop </br> ![Screenshot_14](https://user-images.githubusercontent.com/45105989/113152215-9166e780-923e-11eb-8f57-b6f9b9ea0766.png)
 
-# POST: /cashier | Create cashier
+# POST: /cashier
 Params:</br>![Screenshot_15](https://user-images.githubusercontent.com/45105989/113153040-603ae700-923f-11eb-95c2-1648576322d5.png)
 Created cashier </br> ![Screenshot_16](https://user-images.githubusercontent.com/45105989/113153109-721c8a00-923f-11eb-8ac3-10d7e2f81a43.png)
 
-# POST /cashRegister | Create cash register
+# POST /cashRegister
 Params:</br> ![Screenshot_18](https://user-images.githubusercontent.com/45105989/113153475-ce7fa980-923f-11eb-8462-25310b55a539.png)
 </br>
 Created cash register </br>
 ![image](https://user-images.githubusercontent.com/45105989/113153530-dccdc580-923f-11eb-9b3c-bf34801b7b97.png)
 
+# DELETE, GET /cashRegister 
+Params: </br>
+![image](https://user-images.githubusercontent.com/45105989/113253599-1cdb8980-92ce-11eb-8e17-b515b2b8453f.png)
 
+# PUT /cashRegister
+Params: </br>
+![image](https://user-images.githubusercontent.com/45105989/113253739-5b714400-92ce-11eb-8617-41111abc8202.png)
+
+# POST: /cashier/days 
+![image](https://user-images.githubusercontent.com/45105989/113253985-ac813800-92ce-11eb-9247-e012379cab30.png)
+
+# DELETE: /cashier/days 
+![image](https://user-images.githubusercontent.com/45105989/113253985-ac813800-92ce-11eb-9247-e012379cab30.png)
