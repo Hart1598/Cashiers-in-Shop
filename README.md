@@ -79,7 +79,9 @@ Params: </br>
 ![image](https://user-images.githubusercontent.com/45105989/113253739-5b714400-92ce-11eb-8617-41111abc8202.png)
 
 # POST: /cashier/days 
+Params: </br>
 ![image](https://user-images.githubusercontent.com/45105989/113253985-ac813800-92ce-11eb-9247-e012379cab30.png)
 
 # DELETE: /cashier/days 
+Params: </br>
 ![image](https://user-images.githubusercontent.com/45105989/113253985-ac813800-92ce-11eb-9247-e012379cab30.png)
